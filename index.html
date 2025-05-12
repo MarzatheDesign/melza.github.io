@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cinta Kita</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff0f5;
+      overflow-x: hidden;
+    }
+
+    .background-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('8515296f1ef61c798dbe3421a8babeac.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      filter: blur(5px);
+      z-index: -1;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #ff69b4;
+      color: white;
+      padding: 20px 10px;
+      z-index: 999;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-family: 'Great Vibes', cursive;
+      flex: 100%;
+      text-align: center;
+    }
+
+    #hamburger {
+      display: none;
+      cursor: pointer;
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      z-index: 1001;
+    }
+
+    #hamburger span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      margin: 5px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 2px;
+    }
+
+    #hamburger.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    #hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    #hamburger.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    nav a {
+      margin: 0 20px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      font-family: 'Quicksand', sans-serif;
+      position: relative;
+      padding-bottom: 5px;
+    }
+
+    nav a:hover {
+      color: #ffe;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      background-color: #ff69b4;
+      bottom: 0;
+      left: 0;
+      transform: scaleX(0);
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+
+    nav a:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+
+    .section {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      max-width: 700px;
+      margin: 250px auto 60px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 25px 15px;
+      border-radius: 15px;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      position: relative;
+    }
+
+    .section.visible {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .floating-heart {
+      position: absolute;
+      font-size: 50px;
+      color: red;
+      animation: loveBounce 2s infinite ease-in-out;
+    }
+
+    .floating-heart-left {
+      left: 20px;
+      top: 20px;
+    }
+
+    .floating-heart-right {
+      right: 20px;
+      top: 20px;
+    }
+
+    @keyframes loveBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    footer {
+      background-color: #ff69b4;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .welcome-message {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ff69b4;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2em;
+      font-family: 'Great Vibes', cursive;
+      z-index: 2000;
+      animation: fadeOut 4s forwards;
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    .typing {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 0.15em solid white;
+      animation: typing 3s steps(30, end), blink .75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      from, to { border-color: transparent }
+      50% { border-color: white }
+    }
+
+    audio {
+      display: none;
+    }
+
+    #music-controls {
+      position: fixed;
+      top: 85px;
+      left: 20px;
+      z-index: 1000;
+    }
+
+    #music-controls button {
+      background: #ffffff;
+      border: 2px solid #ff69b4;
+      padding: 10px 15px;
+      color: #ff69b4;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    #music-controls button:hover {
+      background: #ff69b4;
+      color: white;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      #hamburger {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        flex-direction: column;
+        background-color: white;
+        position: absolute;
+        top: 70px;
+        right: 15px;
+        border-radius: 10px;
+        padding: 10px 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        width: 180px;
+      }
+
+      nav.show {
+        display: flex;
+      }
+
+      nav a {
+        margin: 8px 0;
+        font-size: 15px;
+        color: #ff69b4;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 6px;
+        width: 100%;
+        text-align: left;
+      }
+
+      nav a:last-child {
+        border-bottom: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 22px;
+      }
+
+      .welcome-message {
+        font-size: 1.5em;
+      }
+
+      #music-controls {
+        top: 120px;
+        left: 10px;
+      }
+
+      #music-controls button {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+
+      nav a {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background-image"></div>
+
+  <div class="welcome-message" id="welcome">
+    <div class="typing">Selamat Datang di Web Cinta Kita</div>
+  </div>
+
+  <header>
+    <h1>Cinta Kita</h1>
+    <div id="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="nav-menu">
+      <a href="#" onclick="showSection('beranda'); closeMenu()">Beranda</a>
+      <a href="#" onclick="showSection('kontak'); closeMenu()">Kontak</a>
+      <a href="#" onclick="showSection('foto'); closeMenu()">Foto</a>
+    </nav>
+  </header>
+
+  <div id="music-controls">
+    <button onclick="toggleMusic()" id="music-btn">🔊</button>
+  </div>
+
+  <audio id="background-music" loop>
+    <source src="ssstik.io_1746866080759.mp3" type="audio/mp3">
+    Browser tidak mendukung audio.
+  </audio>
+
+  <section class="section" id="beranda">
+    <div class="floating-heart floating-heart-left">❤️</div>
+    <div class="floating-heart floating-heart-right">❤️</div>
+    <h2>Beranda</h2>
+    <p>Kisah cinta kami dimulai sejak 2025. Berawal dari latihan paskibra hingga menjadi kisah penuh cinta dan harapan.</p>
+  </section>
+
+  <section class="section" id="kontak">
+    <div class="floating-heart floating-heart-left">❤️</div>
+    <div class="floating-heart floating-heart-right">❤️</div>
+    <h2>Kontak</h2>
+    <ul style="list-style: none; padding: 0; font-size: 16px; line-height: 1.8; text-align: left;">
+      <li>📧 <strong>Email :</strong> amelrohmah0@gmail.com</li>
+      <li>📧 <strong>Email :</strong> tzyarza8@gmail.com</li>
+      <li>📷 <strong>Instagram Amel :</strong> <a href="https://instagram.com/melyafya1_" target="_blank">@melyafya1_</a></li>
+      <li>📷 <strong>Instagram Arza :</strong> <a href="https://instagram.com/mzafidz_" target="_blank">@mzafidz_</a></li>
+    </ul>
+  </section>
+
+  <section class="section" id="foto">
+    <div class="floating-heart floating-heart-left">❤️</div>
+    <div class="floating-heart floating-heart-right">❤️</div>
+    <h2>Foto Kenangan</h2>
+    <div class="gallery">
+      <img src="WhatsApp Image 2025-05-12 at 20.10.56.jpeg" alt="Kenangan 1">
+      <img src="WhatsApp Image 2025-05-12 at 20.10.49.jpeg" alt="Kenangan 2">
+      <img src="WhatsApp Image 2025-05-12 at 20.10.50.jpeg" alt="Kenangan 3">
+      <img src="WhatsApp Image 2025-05-12 at 20.10.53.jpeg" alt="Kenangan 4">
+      <img src="WhatsApp Image 2025-05-12 at 20.10.54.jpeg" alt="Kenangan 5">
+      <img src="WhatsApp Image 2025-05-12 at 20.10.55.jpeg" alt="Kenangan 6">
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Cinta kita berdua</p>
+  </footer>
+
+  <script>
+    let isPlaying = false;
+    const audioElement = document.getElementById('background-music');
+    const musicBtn = document.getElementById('music-btn');
+
+    function toggleMusic() {
+      if (isPlaying) {
+        audioElement.pause();
+        musicBtn.textContent = "🔇";
+      } else {
+        audioElement.play();
+        musicBtn.textContent = "🔊";
+      }
+      isPlaying = !isPlaying;
+    }
+
+    function showSection(sectionId) {
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(section => {
+        section.classList.remove('visible');
+      });
+      const section = document.getElementById(sectionId);
+      section.classList.add('visible');
+    }
+
+    document.getElementById('welcome').addEventListener('animationend', () => {
+      document.getElementById('welcome').style.display = 'none';
+      showSection('beranda');
+      audioElement.play();
+    });
+
+    showSection('beranda');
+
+    function toggleMenu() {
+      const nav = document.getElementById('nav-menu');
+      const hamburger = document.getElementById('hamburger');
+      nav.classList.toggle('show');
+      hamburger.classList.toggle('open');
+    }
+
+    function closeMenu() {
+      document.getElementById('nav-menu').classList.remove('show');
+      document.getElementById('hamburger').classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>
